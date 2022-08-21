@@ -152,27 +152,12 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-我的一篇博客文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-MySql笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/08/20/%E6%88%91%E7%9A%84%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的一篇博客文章</a>
-    </h1>
-  
-
-        
-        <a href="/2022/08/20/%E6%88%91%E7%9A%84%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="archive-article-date">
-  	<time datetime="2022-08-20T13:51:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-20</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>hello world</p>
+        <p>1、从8.0.1开始，function为保留字。<br>2、从MySQL 8.0.17开始，对于整数数据类型，显示宽度属性已弃用;您应该期望在MySQL的未来版本中删除对它的支持。<br>3、show warnings;语句查看警告详细信息。<br>4、分组函数（count sum avg max min）一般和group by联合使用，并且都是在group by 语句执行结束之后才会执行的，<br>当一条sql语句中没有group by 的话，整张表的数据会自成一组。<br>5，SQL语句规则：分组函数不可以直接使用在where子句当中，因为group by 是在where执行之后才会执行的<br>6，规则：当一条语句中有group by的话，select后面只能跟分组函数和参与分组的字段，例：select job avg(sal) from emp group by job;<br>7，尽量在where后过滤数据，实在不行再用having过滤，比如 having avg(sal) &gt; 2000;<br>8,一个完整的语句：select …from…where … group by… having… order by…<br>9，查询当前使用的数据库 select database()<br>10, 终止一条正在编写的语句，键入\c<br>11,查看其它库中的表 show tables from (otherDatabaseName)<br>12.转义用斜杠<br>13，当一个文件的扩展名是 .sql，并且该文件中编写了大量的sql语句，我们称这样的文件为sql脚本。直接使用source命令执行sql<br>脚本，例如 source D：.…...….\test.sql;<br>14,SQL语句的分类：<br>    DQL(数据查询语言) ： 查询语句，凡是select语句都是DQL<br>    DML(数据操作语言) ：insert delete update ，对表中的数据进行增删改<br>    DDL(数据定义语言) ：create drop alter ,对表结构的增删改<br>    TCL(事务控制语言) ： commit提交事务，rollback回滚事务。（TCL中的T是Transaction）<br>    DCL(数据控制语言) ： grant授权、revoke撤销权限等<br>15，在表的连接查询方面有一个现象被称为：笛卡尔积现象（笛卡尔乘积现象）<br>笛卡尔积现象：当两张表进行连接查询的时候，没有任何条件限制，最终查询结果条数是两张表记录条数的乘积<br>怎么避免：加条件进行过滤，例如select e.ename,d.dname from emp e , dept d where e.id &#x3D; d.id;（SQL92老语法，不用）<br>(使用别名提高可读性，提高执行效率)<br>SQL99语法：…A join B on 连接条件 where…   SQL99语法结构更清晰：表的连接条件和后来的where条件分离了<br>例如select e.ename,d.dname from emp e join dept d on e.deptno &#x3D; d.deptno<br>16、自连接就是把一张表当作两张表，例如 找出每个员工的上级领导，并显示员工名和领导名<br>思路：员工的领导编号&#x3D;领导的员工编号<br>select a.ename as ‘员工名’,b.ename as ‘领导名’ from emp a inner join emp b on a.mgr &#x3D; b.empno;<br>17、外连接是什么，和内连接有什么区别？<br>内连接：假设A、B两张表进行内连接，凡是两张表能够匹配的记录查询出来，AB两张表没有主副之分。<br>外连接：假设A、B两张表进行外连接，一张表为主表，一张表为副表，主要查询主表中的数据，捎带着查询副表，当副表<br>中的数据没有和主表中的数据匹配上，副表自动模拟出NULL与之匹配。<br>18、多表内外连接结合使用：select … … from …join … on…join..on…left join…on…<br>19、本机IP：127.0.0.1 或 localhost 或者在局域网中的真实IP<br>20、select语句嵌套select语句，被嵌套的select语句是子查询。子查询可以出现在哪里？<br>    select..(select)…from..(select)…where..(select).<br>21、limit是mysql特有的，取结果集中的部分数据。语法：limit startIndex,length<br>startIndex表示起始位置，0表示第一条数据；length表示取几个<br>limit是最后执行的一个环节<br>22、通用的标准分页sql?<br>每页显示3条记录：<br>第一页：0，3	第二页：3，3	第三页：6，3	第四页：9，3<br>每页显示pageSize条记录：第pageNo页：（pageNo-1）*pageSize,pageSize<br>23、表的复制：create table 表名 as select语句；<br>将查询结果插入到一张表中（表结构要相同）：insert into 表名 select语句<br>24、mysql提供主键值自增：例如id int primary key auto_increment<br>25、外键可以为NULL。外键字段引用其他表的某个字段的时候，被引用的字段不一定是主键，但至少具有unique约束<br>26、什么是事务（Transaction)? 一个事务是一个完整的业务逻辑单元，不可再分。和事务语句相关的语句只有DML语句。<br>只要执行了commit提交事务或者rollback回滚事务，事务就结束。<br>事务包括四大特性：<br>        A:原子性：事务是最小的工作单元，不可再分<br>        B:一致性：事务必须保证多条DML语句同时成功或者同时失败<br>        I:隔离性：事务A与事务B之间具有隔离<br>        D:持久性：最终数据必须持久化到硬盘文件中，事务才算成功的结束<br>关于事务之间的隔离性；mysql默认的事务隔离级别是：可重复读。<br>    事务隔离性存在隔离级别，理论上隔离级别包括四个：<br>    第一级别：读未提交（read uncommitted)<br>        对方事务还没有提交，我们当前事务可以读取到对方未提交的数据。读未提交存在脏读（Dirty Read）<br>        现象：表示读到了脏的数据。<br>    第二级别：读已提交（read committed）<br>        这种隔离级别解决了：脏读现象。<br>        对方事务提交之后的数据我方可以读取到。存在的问题是：不可重复读。<br>    第三级别：可重复读（repeatable read）<br>        这种隔离级别解决了：不可重复读问题。<br>        存在的问题：读取到的数据是幻象。<br>    第四级别：序列化读&#x2F;串行化读（serializable)<br>        效率低，需要事务排队<br>27、mysql事务默认情况下是自动提交的。只要执行任意一条DML语句则提交一次。怎么关闭自动提交？start transaction;<br>28、设置事务的全局隔离级别：set global transaction isolation level read uncommitted;<br>查看事务的全局隔离级别：select @@global.tx_isolation;<br>29、将数据库中的数据导出（整个库）：在dos命令窗口执行：mysqldump bjpowernode&gt;D:\bjpowernode.sql -uroot -p123<br>导出指定的某个表：mysqldump bjpowernode 表名&gt;D:\bjpowernode.sql -uroot -p123<br>30、数据库设计三范式（按照这个三范式设计的表不会出现数据冗余）<br>第一范式：任何一张表都应该有主键，并且每一个字段原子性不可再分<br>第二范式：所有非主键字段完全依赖主键，不能产生部分依赖。解决方法：多对多、三张表、关系表中有两个外键<br>第三范式：所有非主键字段直接依赖主键，不能产生传递依赖。解决方法：一对多、两张表、多的表加外键<br>注意：在实际的开发中，以满足客户的需求为主，有时候会拿冗余换执行速度。<br>31、一对一设计有两种方案：主键共享（有一个表的主键也是外键）、外键唯一（unique就是一对一，不唯一就是一对多）<br>32、完美卸载mysql，双击安装包，remove，然后删除Program Files和ProgramData中的Mysql<br>MySQL不是数据库（DB）,而是数据库管理系统（DBMS）</p>
 
       
 
@@ -185,82 +170,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/08/20/%E6%88%91%E7%9A%84%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/08/20/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2022/08/20/hello-world/" class="archive-article-date">
-  	<time datetime="2022-08-20T13:47:52.619Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/08/20/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/08/21/MySql%E7%AC%94%E8%AE%B0/">展开全文 >></a>
         </p>
       
 
