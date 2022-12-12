@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>menu</title>
+    <style>
+    .hide {
+         display: none;
+    }
+html {
+        height: 100%
+    }
+body {
+        width: 100%;
+        height: 100%;
+        padding-top: 50vh;
+        margin-top: -76px;
+        text-align: center;
+        background: rgb(226, 225, 225)
+    }
+
+button {
+        width : 200px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-size: 1.5rem;
+        background: #fff;
+        /* color: #f2c0ff; */
+        box-shadow: 5px 5px 5px dimgray;
+
+    }
+
+    p {
+        font-size: 1.4rem;
+        color:#ce61e9;
+    }
+    </style>
+</head>
+<body>
+    <h1 style="color:pink;font-size:50px;">兰兰的点餐机</h1>
+    <button id="start">中午吃啥呢？</button>
+    <button id="stop" class="hide">停</button>
+    <p> </p>
+  
+    <script>
+        const lunchPlaces = [
+  '麻辣香锅',
+  '口水鸡+酸辣土豆丝',
+  '牛肉拌面',
+  '地锅鸡',
+  '小炒菜《西红柿炒鸡蛋》',
+  '辣子鸡',
+  '粥+鸡蛋+鸡腿',
+  '麻辣烫',
+  '牛排减脂餐',
+  '麻辣拌',
+  '龙虾盖饭',
+  '牛肉面',
+  '胡辣汤+肉夹饼',
+  '空心心',	
+]
+
+let timeout = 0;
+
+let getRandomIndice = (max)=> {
+    return Math.floor(Math.random() * max) 
+};
+
+let rollDices = () => {
+	let node = document.querySelector('p');
+  let i = 0;
+	timeout = setInterval(() => {
+  	if (i === lunchPlaces.length) {
+    	i = 0;
+    }
+  	node.textContent = lunchPlaces[i];
+    i++;
+  }, 100)
+}
+let count = 0;
+document.getElementById('start').onclick = () => {
+    rollDices();
+    document.getElementById('start').classList.add('hide');
+    document.getElementById('stop').classList.remove('hide');
+    document.querySelector('p').textContent = '';
+};
+
+document.getElementById('stop').onclick = () => {
+    if(count<=4){
+        
+        let rest = lunchPlaces[getRandomIndice(lunchPlaces.length)];
+        clearInterval(timeout);
+        document.getElementById('start').classList.remove('hide');
+        document.getElementById('stop').classList.add('hide');
+        document.querySelector('p').textContent = rest;
+        count++;
+
+    }
+    else{
+        alert('挑食的小馋嘴！！！')
+    }
+};
+    </script>
+</body>
+</html>
